@@ -26,7 +26,7 @@ export default function ProjectSlider({ projects, onClose }: ProjectSliderProps)
   const [showFullImage, setShowFullImage] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const wheelTimeoutRef = useRef<number | null>(null);
   const isAnimatingRef = useRef(false);
 
   // Keep ref in sync with state
@@ -76,7 +76,7 @@ export default function ProjectSlider({ projects, onClose }: ProjectSliderProps)
       
       setIsAnimating(true);
       
-      wheelTimeoutRef.current = setTimeout(() => {
+      wheelTimeoutRef.current = window.setTimeout(() => {
         wheelTimeoutRef.current = null;
         setIsAnimating(false);
       }, 600);
@@ -88,7 +88,7 @@ export default function ProjectSlider({ projects, onClose }: ProjectSliderProps)
       return () => {
         container.removeEventListener('wheel', handleWheel);
         if (wheelTimeoutRef.current) {
-          clearTimeout(wheelTimeoutRef.current);
+          window.clearTimeout(wheelTimeoutRef.current);
         }
       };
     }
@@ -162,25 +162,6 @@ export default function ProjectSlider({ projects, onClose }: ProjectSliderProps)
       };
     }
   }, [currentIndex, touchStart, isAnimating, projects.length]);
-
-  const goToProject = (index: number) => {
-    if (isAnimating) return;
-    
-    // Allow wrapping around - go to last project if scrolling up from first, and vice versa
-    let newIndex = index;
-    if (index < 0) {
-      newIndex = projects.length - 1;
-    } else if (index >= projects.length) {
-      newIndex = 0;
-    }
-    
-    setIsAnimating(true);
-    setCurrentIndex(newIndex);
-    
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 900);
-  };
 
   const tiltX = (mousePos.x - 0.5) * 4;
   const tiltY = (mousePos.y - 0.5) * -4;

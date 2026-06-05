@@ -82,7 +82,7 @@ const Shuffle: React.FC<ShuffleProps> = ({
     return `top ${startPct}%${sign}`;
   }, [threshold, rootMargin]);
 
-  useGSAP(() => {
+  useEffect(() => {
     if (!ref.current || !text || !fontsLoaded) return;
 
     if (respectReducedMotion && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -361,30 +361,27 @@ const Shuffle: React.FC<ShuffleProps> = ({
       teardown();
       setReady(false);
     };
-  }, {
-    dependencies: [
-      text,
-      duration,
-      maxDelay,
-      ease,
-      scrollTriggerStart,
-      fontsLoaded,
-      shuffleDirection,
-      shuffleTimes,
-      animationMode,
-      loop,
-      loopDelay,
-      stagger,
-      scrambleCharset,
-      colorFrom,
-      colorTo,
-      triggerOnce,
-      respectReducedMotion,
-      triggerOnHover,
-      onShuffleComplete,
-    ],
-    scope: ref,
-  });
+  }, [
+    text,
+    duration,
+    maxDelay,
+    ease,
+    scrollTriggerStart,
+    fontsLoaded,
+    shuffleDirection,
+    shuffleTimes,
+    animationMode,
+    loop,
+    loopDelay,
+    stagger,
+    scrambleCharset,
+    colorFrom,
+    colorTo,
+    triggerOnce,
+    respectReducedMotion,
+    triggerOnHover,
+    onShuffleComplete,
+  ]);
 
   const baseTw = 'inline-block whitespace-normal break-words will-change-transform uppercase text-2xl leading-none';
   const userHasFont = useMemo(() => className && /font[-[]/i.test(className), [className]);

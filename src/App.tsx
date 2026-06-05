@@ -10,7 +10,6 @@ import ProfileCard from './components/ui/ProfileCard'
 import BorderGlow from './components/ui/BorderGlow'
 import InfiniteGlowLine from './components/ui/InfiniteGlowLine'
 import InfiniteGlowLineVertical from './components/ui/InfiniteGlowLineVertical'
-import StarBorder from './components/ui/StarBorder'
 import TrueFocus from './components/ui/TrueFocus'
 import ProjectSlider from './components/ui/ProjectSlider'
 
@@ -28,14 +27,10 @@ export function App() {
   const [introComplete, setIntroComplete] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [isClosingProjects, setIsClosingProjects] = useState(false);
-  const [showTransition, setShowTransition] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const aboutRef = useRef<HTMLElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
   const homeRef = useRef<HTMLElement>(null);
-  const aboutTitleRef = useRef<HTMLHeadingElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
-  const projectsContentRef = useRef<HTMLDivElement>(null);
-  const transitionRef = useRef<HTMLDivElement>(null);
 
   const projects = [
     {
@@ -549,7 +544,7 @@ export function App() {
       <div className={`horizontal-scroll-container relative w-full overflow-hidden ${showProjects ? 'hidden' : ''}`}>
         <div className="flex w-[200vw]">
           {/* About Me Section - Slide 1 */}
-          <section 
+          <div 
             ref={aboutRef}
             id="about" 
             className="horizontal-slide-section relative w-screen h-screen flex-shrink-0 flex items-center justify-center px-4 md:px-8 overflow-y-auto"
@@ -743,13 +738,6 @@ export function App() {
               animationDuration={0.5}
               pauseBetweenAnimations={1}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white text-center mb-12 md:mb-16"
-              style={{
-                fontFamily: '"Titan One", "Fredoka", "Righteous", cursive',
-                fontWeight: 400,
-                textTransform: 'uppercase',
-                letterSpacing: '0.02em',
-                perspective: '1000px',
-              }}
             />
 
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-center gap-8 lg:gap-12">
@@ -856,10 +844,9 @@ export function App() {
               </div>
             </div>
           </div>
-          </div>
+        </div>
 
         </div>
-      </section>
 
           {/* View Projects Section - Slide 2 */}
           <section 
